@@ -150,7 +150,13 @@
                             }
                             updateIndicatorArray();
                             if (!containerWidth) updateContainerWidth();
-                            goToSlide(scope.carouselIndex);
+                          goToSlide(scope.carouselIndex);
+                          //This event is so that when the carousel has
+                          //finished updating the carousel collection(mainly slidesCount)
+                          //Otherwise the index watch tries to update before the collection
+                          //watch executes. Problematic in the use case of adding to the carousel list
+                          //and then select the newly added item.
+                          scope.$emit('carColUpdate', 'collection updated');
                         });
                     } else {
                         slidesCount = iElement.children().length;
